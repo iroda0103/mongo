@@ -1,0 +1,28 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "first_name": "Orzu",
+  "last_name": "Mirzayev",
+  "username": "aa",
+  "password": "1234"
+}
+
+###
+GET http://localhost:3000/users
+
+###
+GET http://localhost:3000/users/64b86e98eab2e7db936e0153
+
+###
+PATCH http://localhost:3000/users/64b86e98eab2e7db936e0153
+Content-Type: application/json
+
+{
+  "first_name": "Iroda",
+  "last_name":"Muminova",
+  "username":"iroda"
+}
+
+###
+DELETE http://localhost:3000/users/64b86e9feab2e7db936e0156

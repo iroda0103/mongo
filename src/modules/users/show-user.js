@@ -1,14 +1,16 @@
-const { NotFoundError } = require('../../shared/errors');
-const User = require('./User');
+const { NotFoundError } = require("../../shared/errors")
+const User = require("./User")
 
-const showUser = async ({ id }) => {
-  const user = await User.findById(id);
 
-  if (!user) {
-    throw new NotFoundError('Foydalanuvchi topilmadi.');
-  }
+const showUser=async ({id})=>{
+const user=await User.findById(id)
+.select("-password")
 
-  return user;
-};
+if(!user){
+    throw new NotFoundError('Foydalanuvchi topilmadi')
+}
 
-module.exports = showUser;
+return user
+}
+
+module.exports=showUser

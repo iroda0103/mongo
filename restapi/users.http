@@ -1,14 +1,41 @@
-POST http://localhost:3000/users
+POST http://localhost:3000/users/register
 Content-Type: application/json
 
 {
-  "first_name": "Orzu",
-  "last_name": "Mirzayev",
-  "username": "aa",
+  "first_name": "Iroda",
+  "last_name": "Muminova",
+  "username": "iroda01032",
   "password": "1234"
 }
 
 ###
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+"username":"iroda01032",
+"password":"1234"
+}
+
+###
+GET http://localhost:3000/users/me
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiYTY0MDhhMWY5ZTZmM2U2OGMwNzYyIn0sImlhdCI6MTY4OTkzNjkwOX0.cbRI0IJvlXVspb4A74_16MEuotgmmYmeYRlQpouAVtY
+
+###
+PATCH  http://localhost:3000/users/me
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiYTIwOTFlZmEyY2U1YjQ5Mzg5MTUyIn0sImlhdCI6MTY4OTkyNTI3N30.DjmT8F0Ib3xAm-FVrzJbdr3rrDo_x_j-5GqprJtY8pg
+
+{
+  "first_name":"Jamila",
+  "last_name":"Aliyeva"
+}
+
+###
+DELETE  http://localhost:3000/users/me
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRiYTIwOTFlZmEyY2U1YjQ5Mzg5MTUyIn0sImlhdCI6MTY4OTkyNTI3N30.DjmT8F0Ib3xAm-FVrzJbdr3rrDo_x_j-5GqprJtY8pg
+##############################################################################
+
 GET http://localhost:3000/users
 
 ###

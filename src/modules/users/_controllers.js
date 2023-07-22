@@ -1,100 +1,117 @@
 const express = require("express");
-const addUser = require("./add-user");
-const listUser = require("./list-users");
-const getUser = require("./show-user");
-const { editUser } = require("./edit-user");
-const {removeUser}=require('./remove-user')
 const httpValidator = require("../../shared/http-validator");
+const addUser = require("./add-user");
+const loginUser = require("./login-user");
+const showUser = require("./show-user");
+const editUser = require("./edit-user");
+const removeUser=require("./remove-user")
 const {
-  postUserSChema,
+  postRegisterUserSchema,
+  postUserLoginSchema,
   showUserSchema,
-  patchUserSchema,
-  deleteUserSchma,
+  patchMeSchema,
 } = require("./_schemas");
 
 /**
+ *
  * @param {express.Request} req
  * @param {express.Response} res
- * @param {express.NextFunction} next
+ * @param {} next
  */
-const postUser = async (req, res, next) => {
+const postRegister = async (req, res, next) => {
   try {
-    httpValidator({ body: req.body }, postUserSChema);
+    httpValidator({ body: req.body }, postRegisterUserSchema);
 
     const result = await addUser(req.body);
 
     res.status(201).json({
       data: result,
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
-const getUsers = async (req, res, next) => {
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {} next
+ */
+const postLoginUser = async (req, res, next) => {
   try {
-    const result = await listUser();
+    httpValidator({ body: req.body }, postUserLoginSchema);
+
+    const result = await loginUser(req.body);
 
     res.status(200).json({
       data: result,
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
-const showUser = async (req, res, next) => {
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {} next
+ */
+const getMe = async (req, res, next) => {
   try {
-    httpValidator({ params: req.params }, showUserSchema);
-
-    const result = await getUser(req.params);
+    const result = await showUser({ id: req.user.id });
 
     res.status(200).json({
       data: result,
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
-const updateUser = async (req, res, next) => {
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {} next
+ */
+const patchMe = async (req, res, next) => {
   try {
-    httpValidator(
-      {
-        body: req.body,
-        params: req.params,
-      },
-      patchUserSchema
-    );
+    httpValidator({body:req.body},patchMeSchema);
 
-    const result = await editUser({ id: req.params.id, ...req.body });
+    const result = await editUser({ id: req.user.id, ...req.body });
 
     res.status(200).json({
       data: result,
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
-const  deleteUser= async (req, res, next) => {
+/**
+ *
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {} next
+ */
+const deleteMe = async (req, res, next) => {
   try {
-    httpValidator({ params: req.params }, deleteUserSchma);
-
-    const result = await removeUser(req.params);
+    const result = await removeUser({ id: req.user.id });
 
     res.status(200).json({
       data: result,
     });
-  } catch (error) {
-    next(error);
+  } catch (err) {
+    next(err);
   }
 };
 
 module.exports = {
-  postUser,
-  getUsers,
-  showUser,
-  updateUser,
-  deleteUser
+  postRegister,
+  postLoginUser,
+  getMe,
+  patchMe,
+  deleteMe
 };
